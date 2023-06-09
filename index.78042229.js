@@ -1,2 +1,0 @@
-function e(e){return fetch(function(e){return`https://pixabay.com/api/?${new URLSearchParams({key:"37132018-4dabe95031a531ae3f58f9204",q:e,image_type:"photo",orientation:"horizontal",safesearch:"true"}).toString()}`}(e)).then((e=>e.json())).then((e=>console.log(e)))}document.getElementById("search-form").addEventListener("submit",(function(t){t.preventDefault(),console.dir(this);const n=this.searchQuery.value;console.log("input",n),e(n).then((e=>function(e){console.log(e)}(e)))}));
-//# sourceMappingURL=index.78042229.js.map
