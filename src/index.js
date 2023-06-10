@@ -1,10 +1,11 @@
 import { getData } from "./fetch-api";
+import Notiflix from 'notiflix';
 
 const formEl = document.getElementById('search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 export let currentPage = 1;
-export const perPage = 5;
+export const perPage = 100;
 let currentSearchQuery = '';
 let totalHits = 0;
 
@@ -21,9 +22,6 @@ currentSearchQuery = searchQuery;
                     showLoadMoreButton();
                 }
                 return data.hits;
-            } else {
-                hideLoadMoreButton();
-                throw new Error('No images found');
             }
         });
 }
@@ -79,7 +77,7 @@ function onFormSubmit(event) {
         })
         .catch(error => {
       console.error(error);
-      galleryEl.innerHTML = '<p>Sorry, there are no images matching your search query. Please try again.</p>';
+      Notiflix.Notify.failure( '<p>Sorry, there are no images matching your search query. Please try again.</p>');
     });
 }
 
@@ -104,7 +102,7 @@ loadMoreBtn.style.display = 'block';
 function checkEndOfResults() {
     if (totalHits <= currentPage * perPage) {
         hideLoadMoreButton();
-        galleryEl.insertAdjacentHTML('beforeend', '<p>We\'re sorry, but you\'ve reached the end of search results.</p>');
+        Notiflix.Notify.failure( 'We\'re sorry, but you\'ve reached the end of search results.');
     }
 }
 
