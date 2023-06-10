@@ -1,19 +1,25 @@
+.search-form {
+  margin-bottom: 20px;
+}
+.gallery {
+  text-align: center;
+  margin-bottom: 30px;
+}
 .load-more {
   display: none;
-  margin-top: 20px;
-  text-align: center;
+  margin: 0 auto;
 }
-
-.load-more button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+.photo-card {
+  width: 80%;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 16px;
+  background-color: #fffdfd;
 }
-
-.load-more button:hover {
-  background-color: #0056b3;
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
 }

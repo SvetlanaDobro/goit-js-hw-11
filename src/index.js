@@ -5,7 +5,7 @@ const formEl = document.getElementById('search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 export let currentPage = 1;
-export const perPage = 100;
+export const perPage = 40;
 let currentSearchQuery = '';
 let totalHits = 0;
 
