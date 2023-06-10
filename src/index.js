@@ -1,49 +1,31 @@
-const BASE_URL = 'https://pixabay.com/api/';
- 
+import { getData } from "./fetch-api";
+
 const formEl = document.getElementById('search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
-let currentPage = 1;
-const perPage = 40;
+export let currentPage = 1;
+export const perPage = 5;
 let currentSearchQuery = '';
 let totalHits = 0;
 
-
-
-function getRequestUrl(searchQuery) {
-    const params = {
-        key: '37132018-4dabe95031a531ae3f58f9204',
-        q: searchQuery,
-        image_type: "photo",
-        orientation: "horizontal",
-        safesearch: "true",
-        page: currentPage,
-        per_page: perPage
-    }
-const queryString = new URLSearchParams(params).toString();
-    return `${BASE_URL}?${queryString}`;  
-}
-
 function loadHeadLines(searchQuery) {
-    
-    currentSearchQuery = searchQuery;
-    
-    return fetch(getRequestUrl(searchQuery))
-        .then(responce => responce.json())
+currentSearchQuery = searchQuery;
+   
+    return getData(searchQuery)
         .then(data => {
             if (data.hits && data.hits.length > 0) {
                 totalHits = data.totalHits;
                 if (data.totalHits <= currentPage * perPage) {
-                     hideLoadMoreButton();
+                    hideLoadMoreButton();
                 } else {
                     showLoadMoreButton();
                 }
                 return data.hits;
             } else {
-             hideLoadMoreButton();   
-        throw new Error('No images found');
-      }
-        })
+                hideLoadMoreButton();
+                throw new Error('No images found');
+            }
+        });
 }
 
 function renderHeadLine({webformatURL,tags,likes,views,comments,downloads}) {
@@ -102,7 +84,7 @@ function onFormSubmit(event) {
 }
 
 function loadMore() {
-    currentPage++;
+   currentPage++;
 
     loadHeadLines(currentSearchQuery)
         .then(headlines => {
