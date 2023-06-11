@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { currentPage, perPage } from './index';
-import Notiflix from 'notiflix';
 
-const BASE_URL = 'https://pixabay.com/api/';
+axios.defaults.baseURL = 'https://pixabay.com/api/'
 
 export async function getData(searchQuery) {
-  try {
-    const response = await axios.get(getRequestUrl(searchQuery));
-    return response.data;
-  } catch (error) {
-    Notiflix.Notify.failure(error.message);
+  const response = await axios.get(getRequestUrl(searchQuery));
+  if (response.status !== 200) {
+     throw new Error(response.statusText || response.status);
   }
+    return response.data;
 }
+
+
 
 export function getRequestUrl(searchQuery) {
     const params = {
@@ -24,6 +24,6 @@ export function getRequestUrl(searchQuery) {
         per_page: perPage
     }
 const queryString = new URLSearchParams(params).toString();
-    return `${BASE_URL}?${queryString}`;  
+    return `?${queryString}`;  
 }
 

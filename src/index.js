@@ -27,7 +27,6 @@ currentSearchQuery = searchQuery;
 }
 
 function renderHeadLine({webformatURL,tags,likes,views,comments,downloads}) {
-    const cardEl = document.createElement('div');
     const template = `<div class="photo-card">
          <img src="${webformatURL}" alt="${tags}" loading="lazy" /> 
         <div class="info">
@@ -45,17 +44,17 @@ function renderHeadLine({webformatURL,tags,likes,views,comments,downloads}) {
           </p>
         </div>
       </div>`;
-    cardEl.innerHTML = template;
-    galleryEl.append(cardEl);
+    return template;
 };
 
 function renderHeadLinesList(headlines) {
     if (currentPage === 1) {
         galleryEl.innerHTML = '';
     }
-    headlines.forEach(headline => {
-        renderHeadLine(headline);
-    });
+    const renderedHTML = headlines
+        .map(headline => renderHeadLine(headline))
+        .join("");
+    galleryEl.insertAdjacentHTML("beforeend", renderedHTML);
 }
 
 function onFormSubmit(event) {
