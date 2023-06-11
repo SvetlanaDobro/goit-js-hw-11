@@ -1,5 +1,7 @@
 import { getData } from "./fetch-api";
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formEl = document.getElementById('search-form');
 const galleryEl = document.querySelector('.gallery');
@@ -8,6 +10,7 @@ export let currentPage = 1;
 export const perPage = 40;
 let currentSearchQuery = '';
 let totalHits = 0;
+
 
 function loadHeadLines(searchQuery) {
 currentSearchQuery = searchQuery;
@@ -26,9 +29,10 @@ currentSearchQuery = searchQuery;
         });
 }
 
-function renderHeadLine({webformatURL,tags,likes,views,comments,downloads}) {
+function renderHeadLine({largeImageURL,tags,likes,views,comments,downloads}) {
     const template = `<div class="photo-card">
-         <img src="${webformatURL}" alt="${tags}" loading="lazy" /> 
+    <a class="gallery__link" href="${largeImageURL}">
+         <img src="${largeImageURL}" alt="${tags}" loading="lazy" /> 
         <div class="info">
           <p class="info-item">
             <b>Likes: ${likes}</b>
@@ -43,9 +47,19 @@ function renderHeadLine({webformatURL,tags,likes,views,comments,downloads}) {
             <b>Downloads: ${downloads}</b>
           </p>
         </div>
+        </a>
       </div>`;
     return template;
 };
+
+const galleryN = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionDelay: 200,
+    captionsData: 'alt'
+  });
+function refreshSimpleLightbox() {
+  galleryN.refresh();
+}
 
 function renderHeadLinesList(headlines) {
     if (currentPage === 1) {
@@ -55,6 +69,7 @@ function renderHeadLinesList(headlines) {
         .map(headline => renderHeadLine(headline))
         .join("");
     galleryEl.insertAdjacentHTML("beforeend", renderedHTML);
+    refreshSimpleLightbox();
 }
 
 function onFormSubmit(event) {
@@ -69,8 +84,7 @@ function onFormSubmit(event) {
     currentPage = 1;
 
     loadHeadLines(searchQuery)
-        .then(data => {
-            
+        .then(data => { 
             renderHeadLinesList(data);
             toggleLoadMoreButton();
         })
@@ -112,6 +126,8 @@ function toggleLoadMoreButton() {
         showLoadMoreButton();
     }
 }
+
+
 
 formEl.addEventListener('submit', onFormSubmit);
 loadMoreBtn.addEventListener('click', loadMore);
