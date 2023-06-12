@@ -64,7 +64,16 @@ function renderHeadLinesList(headlines) {
         .map(headline => renderHeadLine(headline))
         .join("");
     galleryEl.insertAdjacentHTML("beforeend", renderedHTML);
-    refreshSimpleLightbox();
+  refreshSimpleLightbox();
+  
+  const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: "smooth",
+});
 }
 
 const galleryN = new SimpleLightbox('.gallery a', {
