@@ -71,7 +71,7 @@ function renderHeadLinesList(headlines) {
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight * 0.75,
     behavior: "smooth",
 });
 }
