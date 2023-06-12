@@ -11,8 +11,6 @@ export async function getData(searchQuery) {
     return response.data;
 }
 
-
-
 export function getRequestUrl(searchQuery) {
     const params = {
         key: '37132018-4dabe95031a531ae3f58f9204',

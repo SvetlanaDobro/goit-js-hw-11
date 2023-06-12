@@ -11,6 +11,8 @@ export const perPage = 40;
 let currentSearchQuery = '';
 let totalHits = 0;
 
+
+
 formEl.addEventListener('submit', onFormSubmit);
 loadMoreBtn.addEventListener('click', loadMore);
 
@@ -25,8 +27,8 @@ currentSearchQuery = searchQuery;
                     hideLoadMoreButton();
                 } else {
                     showLoadMoreButton();
-                }
-                return data.hits;
+              }
+              return data.hits;
             }
         });
 }
@@ -92,7 +94,8 @@ function onFormSubmit(event) {
         })
         .catch(error => {
       console.error(error);
-      Notiflix.Notify.failure( '<p>Sorry, there are no images matching your search query. Please try again.</p>');
+          Notiflix.Notify.failure('<p>Sorry, there are no images matching your search query. Please try again.</p>');
+          hideLoadMoreButton();
     });
 }
 
@@ -128,4 +131,6 @@ function toggleLoadMoreButton() {
         showLoadMoreButton();
     }
 }
+
+
 
