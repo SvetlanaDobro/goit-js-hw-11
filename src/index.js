@@ -11,6 +11,8 @@ export const perPage = 40;
 let currentSearchQuery = '';
 let totalHits = 0;
 
+formEl.addEventListener('submit', onFormSubmit);
+loadMoreBtn.addEventListener('click', loadMore);
 
 function loadHeadLines(searchQuery) {
 currentSearchQuery = searchQuery;
@@ -52,15 +54,6 @@ function renderHeadLine({largeImageURL,tags,likes,views,comments,downloads}) {
     return template;
 };
 
-const galleryN = new SimpleLightbox('.gallery a', {
-    captions: true,
-    captionDelay: 200,
-    captionsData: 'alt'
-  });
-function refreshSimpleLightbox() {
-  galleryN.refresh();
-}
-
 function renderHeadLinesList(headlines) {
     if (currentPage === 1) {
         galleryEl.innerHTML = '';
@@ -70,6 +63,15 @@ function renderHeadLinesList(headlines) {
         .join("");
     galleryEl.insertAdjacentHTML("beforeend", renderedHTML);
     refreshSimpleLightbox();
+}
+
+const galleryN = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionDelay: 200,
+    captionsData: 'alt'
+  });
+function refreshSimpleLightbox() {
+  galleryN.refresh();
 }
 
 function onFormSubmit(event) {
@@ -127,7 +129,3 @@ function toggleLoadMoreButton() {
     }
 }
 
-
-
-formEl.addEventListener('submit', onFormSubmit);
-loadMoreBtn.addEventListener('click', loadMore);
